@@ -1,0 +1,11 @@
+private/
+data/
+artifacts/
+датасет/
+датасет.zip
+Город 5. Департамент транспорта.mp4
+.venv/
+.models/
+__pycache__/
+*.pyc
+.env
