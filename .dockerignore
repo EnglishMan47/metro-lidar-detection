@@ -1,0 +1,13 @@
+.git
+.venv
+.models
+artifacts
+data
+датасет
+датасет.zip
+private
+*.mp4
+__pycache__
+*.pyc
+.env
+

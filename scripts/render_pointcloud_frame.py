@@ -119,6 +119,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--lateral", type=float, nargs=2, default=(-10, 10), metavar=("MIN", "MAX"))
     parser.add_argument("--forward", type=float, nargs=2, default=(0, 120), metavar=("MIN", "MAX"))
     parser.add_argument("--height", type=float, nargs=2, default=(-5, 8), metavar=("MIN", "MAX"))
+    parser.add_argument("--select-lateral", type=float, nargs=2, metavar=("MIN", "MAX"))
+    parser.add_argument("--select-forward", type=float, nargs=2, metavar=("MIN", "MAX"))
+    parser.add_argument("--select-height", type=float, nargs=2, metavar=("MIN", "MAX"))
     return parser.parse_args()
 
 
@@ -135,6 +138,13 @@ def main() -> int:
     finite = np.isfinite(x) & np.isfinite(y) & np.isfinite(z)
     nonzero = (x != 0) | (y != 0) | (z != 0)
     keep = finite & nonzero
+    forward_all = -y
+    if args.select_lateral:
+        keep &= (x >= args.select_lateral[0]) & (x <= args.select_lateral[1])
+    if args.select_forward:
+        keep &= (forward_all >= args.select_forward[0]) & (forward_all <= args.select_forward[1])
+    if args.select_height:
+        keep &= (z >= args.select_height[0]) & (z <= args.select_height[1])
     x, y, z = x[keep], y[keep], z[keep]
     forward = -y
 
